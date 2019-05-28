@@ -1,11 +1,11 @@
 provider "aws" {
-  region  = "eu-west-1"
+  region  = "${var.region}"
   version = "~> 2.0"
 }
 
 # Create a VPC
 resource "aws_vpc" "myvpc" {
-  cidr_block = "172.23.0.0/16"
+  cidr_block = "${var.vpc_cidr}"
 
   tags = {
     Name = "myvpc"
@@ -14,7 +14,7 @@ resource "aws_vpc" "myvpc" {
 
 resource "aws_subnet" "first_sb" {
   vpc_id     = "${aws_vpc.myvpc.id}"
-  cidr_block = "172.23.1.0/24"
+  cidr_block = "${var.subnet_cidr}"
 
   tags = {
     Name = "First_sb"
