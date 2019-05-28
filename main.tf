@@ -46,10 +46,11 @@ resource "aws_route_table_association" "route_first_sb" {
   subnet_id      = "${aws_subnet.first_sb.id}"
   route_table_id = "${aws_route_table.r.id}"
 }
-terraform {  
-  backend "s3" {    
-    bucket = "s3terraform44"    
-    key    = "vpc/terraform.tfstate"
-    region = "eu-west-1"  } 
-    }
 
+terraform {
+  backend "s3" {
+    bucket = "s3terraform44"
+    key    = "vpc/terraform.tfstate"
+    region = "eu-west-1"
+  }
+}
