@@ -13,11 +13,10 @@ resource "aws_vpc" "myvpc" {
 }
 
 resource "aws_subnet" "first_sb" {
-  count = 2
-  vpc_id = "${aws_vpc.myvpc.id}"
+  count             = "${length(var.az)}"
+  vpc_id            = "${aws_vpc.myvpc.id}"
   availability_zone = "${element(var.az, count.index)}"
-  cidr_block = "${element(var.subnet_cidr, count.index)}"
-  
+  cidr_block        = "${element(var.subnet_cidr, count.index)}"
 
   tags = {
     Name = "subnet-${count.index}"
@@ -46,15 +45,17 @@ resource "aws_route_table" "r" {
 }
 
 resource "aws_route_table_association" "route_first_sb" {
-  count = 2
+  count          = "${length(aws_subnet.first_sb.*.id)}"
   subnet_id      = "${element(aws_subnet.first_sb.*.id, count.index)}"
   route_table_id = "${aws_route_table.r.id}"
 }
 
+
 terraform {
   backend "s3" {
-    bucket = "s3terraform44"
-    key    = "vpc/terraform.tfstate"
-    region = "eu-west-1"
+    bucket         = "s3terraform44"
+    key            = "vpc/terraform.tfstate"
+    region         = "eu-west-1"
+    dynamodb_table = "dbterraform"
   }
 }

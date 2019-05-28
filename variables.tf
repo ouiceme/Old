@@ -18,6 +18,7 @@ variable "keyterraform" {
   type    = "string"
   default = "vpc/terraform.tfstate"
 }
-variable az {  
-    type = "list"  
-    }
+
+variable az {
+  type = "list"
+}
