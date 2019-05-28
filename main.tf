@@ -13,11 +13,14 @@ resource "aws_vpc" "myvpc" {
 }
 
 resource "aws_subnet" "first_sb" {
-  vpc_id     = "${aws_vpc.myvpc.id}"
-  cidr_block = "${var.subnet_cidr}"
+  count = 2
+  vpc_id = "${aws_vpc.myvpc.id}"
+  availability_zone = "${element(var.az, count.index)}"
+  cidr_block = "${element(var.subnet_cidr, count.index)}"
+  
 
   tags = {
-    Name = "First_sb"
+    Name = "subnet-${count.index}"
   }
 }
 
@@ -43,7 +46,8 @@ resource "aws_route_table" "r" {
 }
 
 resource "aws_route_table_association" "route_first_sb" {
-  subnet_id      = "${aws_subnet.first_sb.id}"
+  count = 2
+  subnet_id      = "${element(aws_subnet.first_sb.*.id, count.index)}"
   route_table_id = "${aws_route_table.r.id}"
 }
 

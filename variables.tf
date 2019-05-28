@@ -3,7 +3,7 @@ variable "vpc_cidr" {
 }
 
 variable "subnet_cidr" {
-  type = "string"
+  type = "list"
 }
 
 variable "region" {
@@ -18,3 +18,6 @@ variable "keyterraform" {
   type    = "string"
   default = "vpc/terraform.tfstate"
 }
+variable az {  
+    type = "list"  
+    }

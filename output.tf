@@ -3,7 +3,7 @@ output "id_vpc" {
 }
 
 output "id_subnet" {
-  value = "${aws_subnet.first_sb.id}"
+  value = "${aws_subnet.first_sb.*.id}"
 }
 
 output "id_gw" {
