@@ -45,11 +45,10 @@ resource "aws_route_table" "r" {
 }
 
 resource "aws_route_table_association" "route_first_sb" {
-  count          = "${length(aws_subnet.first_sb.*.id)}"
+  count          = "${length(var.subnet_cidr)}"
   subnet_id      = "${element(aws_subnet.first_sb.*.id, count.index)}"
   route_table_id = "${aws_route_table.r.id}"
 }
-
 
 terraform {
   backend "s3" {

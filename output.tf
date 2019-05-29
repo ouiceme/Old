@@ -5,6 +5,7 @@ output "id_vpc" {
 output "id_subnet" {
   value = "${aws_subnet.first_sb.*.id}"
 }
+
 /* output "name_subnet" {
   value = "${aws_subnet.first_sb.*.tags["Name"]}"
 }
